@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import Img from '../reusables/Img';
 import { Eye,  EyeOff, Lock, Mail  } from 'lucide-react';
 
 const AuthComponent: React.FC = () => {
@@ -26,18 +27,18 @@ const AuthComponent: React.FC = () => {
     };
 
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+      <div className="min-h-screen flex items-center justify-center bg-[#E5EEFC] px-4">
+        <div className="max-w-md w-full bg-white rounded-[12px] shadow-xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bolc text-gray-900 mb-2">Admin Login</h1>
-            <p className="text-gray-600">Welcome back! Please login to your account.</p>
+            <Img src="/admin-logo.svg" width={130.83} height={64} className="mx-auto mb-4" />
+            <h1 className="text-[#525252] font-[500] text-[24px] mb-2">Admin Login</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+             <span className="block text-[14px] font-[600] text-[#525252] mb-2">
               Email Address
-            </label>
+            </span>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                <Mail className="h-5 w-5 text-gray-400" />
@@ -46,7 +47,7 @@ const AuthComponent: React.FC = () => {
                id="email"
                type="email"
                onChange={(e) => setEmail(e.target.value)}
-               className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+               className="block w-full pl-10 pr-3 py-3 border-[1px] border-[#CDCDD7] rounded-[4px] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                placeholder="admin@tenaly.com"
                required
               />
@@ -54,9 +55,9 @@ const AuthComponent: React.FC = () => {
             </div>
 
             <div>
-             <label htmlFor='password' className='block text-sm font-medium text-gray-700 mb-2'>
+             <span  className='block text-[14px] font-[600] text-[#525252] mb-2'>
                Password
-            </label>
+            </span>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                <Lock className="h-5 w-5 text-gray-400" />
@@ -66,7 +67,7 @@ const AuthComponent: React.FC = () => {
                type={showPassword ? 'text' : 'password'}
                value={password}
                onChange={(e) => setPassword(e.target.value)}
-               className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+               className="block w-full pl-10 pr-12 py-3  border-[1px] border-[#CDCDD7] rounded-[4px] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                placeholder="Enter your password"
                required
               />
@@ -87,7 +88,7 @@ const AuthComponent: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 
+              className="w-full bg-gradient-to-r from-[#00A8DF] to-[#1031AA]  text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 
               focus:outline-none focus:ring-2 focus:ring-indigo-500 
               focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
