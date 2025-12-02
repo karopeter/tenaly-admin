@@ -256,7 +256,7 @@ export default function AdDetailsPage() {
       await api.patch(`/profile/admin/approve-ad/${adDetails._id}`);
       
       toast.success('Ad approved successfully!');
-      router.push('/ads-verication');
+      router.push('/ads-verification');
     } catch (error) {
       console.error('Error approving ad:', error);
       alert('Failed to approve ad');
@@ -287,7 +287,7 @@ export default function AdDetailsPage() {
       setRejectionReason("");
       
       toast.success('Ad rejected successfully!');
-      router.push('/ads-verication');
+      router.push('/ads-verification');
     } catch (error) {
       console.error('Error rejecting ad:', error);
       toast.error('Failed to reject ad');
@@ -1498,7 +1498,7 @@ return (
         {/* Header with Back Button */}
         <div className="mb-6 flex items-center gap-4">
           <button
-            onClick={() => router.push('/admin/ads-verification')}
+            onClick={() => router.push('/ads-verification')}
             className="flex items-center gap-2 text-[#525252] font-[400] text-[14px]"
           >
             Ads 
