@@ -247,11 +247,11 @@ const clientSideExport = () => {
           <main className="p-6">
             {/* Header */}
             <div className="mb-6">
-              <h1 className="text-[20xp] font-medium text-[#525252]">Ads</h1>
+              <h1 className="text-[20px] font-medium text-[#525252]">Ads</h1>
             </div>
 
             {/* Ads Overview Section */}
-            <div className="bg-white rounded-lg p-4 mb-6">
+            <div className=" rounded-lg p-4 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-[14px] font-medium 
                  text-[#000087] flex 
@@ -264,7 +264,7 @@ const clientSideExport = () => {
                   <button
                   onClick={exportToCSV}
                   className="flex items-center gap-2 px-4 py-2 cursor-pointer 
-                  bg-gradient-to-r from-[#00A8DF] to-[#1031AA] text-white rounded-lg hover:bg-indigo-700"
+                  bg-gradient-to-r from-[#00A8DF] to-[#1031AA] text-white rounded-lg"
                 >
                   <FiDownload />
                   Export csv
