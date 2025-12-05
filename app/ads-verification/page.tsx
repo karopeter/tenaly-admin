@@ -91,16 +91,16 @@ export default function AdsVerification() {
        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
+
+     useEffect(() => {
       fetchUsers();
-    }, [statusFilter, categoryFilter, dateFilter, searchTerm]);
+    }, []);
 
     const fetchUsers = async () => {
       try {
        setLoading(true);
-       const queryParam = statusFilter !== 'all' ? `?status=${statusFilter}` : '';
-       const response = await api.get(`/profile/admin/listed-ads${queryParam}`);
     
+      const response = await api.get(`/profile/admin/listed-ads`);
   
     const mappedAds = response.data.data.map((ad: any) => ({
       _id: ad._id, 

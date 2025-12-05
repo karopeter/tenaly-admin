@@ -210,11 +210,12 @@ export default function Verification() {
       );
     };
 
+
     const getStatusCount = (status: "verified" | "pending" | "rejected") => {
-      return filteredVerifications.reduce((count, userVerification) => {
-         return count + userVerification.verifications.filter(v => v.status === status).length
-      }, 0);
-    };
+     return verifications.reduce((count, userVerification) => {
+       return count + userVerification.verifications.filter(v => v.status === status).length
+    }, 0);
+  };
 
     
     if (isLoading || loading) {

@@ -149,14 +149,14 @@ export default function Dashboard() {
       iconBg: "bg-red-100",
       iconColor: "text-red-600"
     },
-    {
-      title: "Complete Profiles",
-      value: formatNumber(userStats?.completeProfiles || 0),
-      change: `${Math.round(((userStats?.completeProfiles || 0) / (userStats?.totalUsers || 1)) * 100)}% completed`,
-      icon: Clipboard,
-      iconBg: "bg-indigo-100",
-      iconColor: "text-indigo-600"
-    },
+    // {
+    //   title: "Complete Profiles",
+    //   value: formatNumber(userStats?.completeProfiles || 0),
+    //   change: `${Math.round(((userStats?.completeProfiles || 0) / (userStats?.totalUsers || 1)) * 100)}% completed`,
+    //   icon: Clipboard,
+    //   iconBg: "bg-indigo-100",
+    //   iconColor: "text-indigo-600"
+    // },
     {
       title: "Active This Week",
       value: formatNumber(userStats?.recentActivity.last7Days || 0),

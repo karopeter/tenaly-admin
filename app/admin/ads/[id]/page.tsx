@@ -1519,8 +1519,8 @@ return (
             <div className="mb-6 relative">
               <Img
                 src={adDetails.images[currentImageIndex]}
-                width={800}
-                height={400}
+                width={1200}
+                height={800}
                 alt={`Ad image ${currentImageIndex + 1}`}
                 className="w-[481px] md:w-full h-[400px] object-cover rounded-[8px]"
               />
