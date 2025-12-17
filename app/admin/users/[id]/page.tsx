@@ -435,11 +435,76 @@ export default function ViewUserProfile() {
           )}
 
           {/* Verification Tab */}
-          {activeTab === 'verification' && (
+          {activeTab === 'verification' && 
             <div className="text-center py-8">
-                <p className="text-gray-500">Verification details coming soon...</p>
+                <div className="border-[1px] border-[#EDEDED] rounded-[8px] p-6">
+                  <h3 className="text-[16px] font-[600] text-[#525252] mb-4">Verification Status</h3>
+
+                  <div className="space-y-4">
+                    {/* Personal Verification */}
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <p className="text-[14px] font-[600] text-[#525252] mb-1">Personal Verification</p>
+                        <p className="text-[12px] text-[#868686]">Identity and personal details verification</p>
+                      </div>
+                      <span
+                       className={`px-3 py-1 text-[12px] font-semibold rounded-full capitalize ${
+                        profileData.verificationStatus.personal === 'verified' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                         {profileData.verificationStatus.personal}
+                      </span>
+                    </div>
+
+                    {/* Business Verification */}
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <p className="text-[14px] font-[600] text-[#525252] mb-1">Business Verification</p>
+                        <p className="text-[12px] text-[#868686]">Business registration and documentation</p>
+                      </div>
+                      <span
+                        className={`px-3 py-1 text-[12px] font-semibold rounded-full capitalize ${
+                       profileData.verificationStatus.business === 'verified' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-yellow-100 text-yellow-800'
+                       }`}>
+                        {profileData.verificationStatus.business}
+                      </span>
+                    </div>
+
+                    {/* Overall Statcus */}
+                    <div className="mt-6 pt-4 border-t border-gray-200">
+                      <div className="flex items-center gap-2">
+                        {profileData.isVerified ? (
+                          <>
+                           <Img
+                             src="/verified-icon.svg"
+                             alt="Verified Icon"
+                             width={20}
+                             height={20}
+                           />
+                           <span className="text-[#238E15] text-[14px] font-[600]">
+                             User is Fully Verified
+                           </span>
+                          </>
+                        ): (
+                          <span className="text-[#F59E0B] text-[14px] font-[600]">
+                            Verification Incomplete
+                          </span>
+                        )}
+                      </div>
+
+                      {!profileData.hasSubmittedVerification && (
+                        <p className="text-[12px] text-[#868686] mt-2">
+                          User has not submitted verification documents yet
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
             </div>
-          )}
+          }
 
           {/* Subscription Tab */}
           {activeTab === 'subscription' && (

@@ -237,12 +237,6 @@ export default function Dashboard() {
                     {formatNumber(totalSellers)} ({Math.round((totalSellers / (userStats?.totalUsers || 1)) * 100)}%)
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Admins:</span>
-                  <span className="text-sm font-semibold text-gray-800">
-                    {formatNumber(userStats?.roleBreakdown.admin || 0)}
-                  </span>
-                </div>
               </div>
             </div>
 
