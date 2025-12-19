@@ -5,30 +5,12 @@ import { useEffect, useState } from "react";
 import { Sidebar } from "../reusables/Sidebar";
 import { Header } from "../reusables/Header";
 import { StatsCard } from "../reusables/StatsCard";
-import { User, Clipboard, Crown, DollarSign, ShoppingBag, Store } from "lucide-react";
+import { User, Crown,  ShoppingBag, Store } from "lucide-react";
 import api from "@/services/api";
+import { UserStats } from "../types/dashboard.types";
+import RevenueGraph from "../reusables/RevenueGraph";
 import { toast } from "react-toastify";
 
-interface UserStats {
-  totalUsers: number;
-  roleBreakdown: {
-    buyer: number;
-    seller: number;
-    admin: number;
-    customer?: number;
-  };
-  providerBreakdown: {
-    local: number;
-    google: number;
-  };
-  verifiedUsers: number;
-  completeProfiles: number;
-  recentActivity: {
-    today: number;
-    last7Days: number;
-    last30Days: number;
-  };
-}
 
 export default function Dashboard() {
   const { user, isLoading } = useAuth();
@@ -134,6 +116,14 @@ export default function Dashboard() {
       iconColor: "text-purple-600"
     },
     {
+     title: "Total Admins",
+     value: formatNumber(userStats?.roleBreakdown.admin || 0),
+     change: `${Math.round(((userStats?.roleBreakdown.admin || 0) / (userStats?.totalUsers || 1)) * 100)}% of total users`,
+     icon: Crown,
+     iconBg: "bg-pink-100",
+     iconColor: "text-pink-600",
+    },
+    {
       title: "Verified Users",
       value: formatNumber(userStats?.verifiedUsers || 0),
       change: `${Math.round(((userStats?.verifiedUsers || 0) / (userStats?.totalUsers || 1)) * 100)}% verified`,
@@ -194,9 +184,7 @@ export default function Dashboard() {
             >
               <option value="">Filter by Year</option>
               <option value="2025">2025</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
+              <option value="2026">2026</option>
             </select>
 
             {/* Last Days Filter Dropdown */}
@@ -217,6 +205,10 @@ export default function Dashboard() {
             {stats.map((stat, idx) => (
               <StatsCard key={idx} {...stat} />
             ))}
+          </div>
+
+          <div className="mt-8">
+            <RevenueGraph />
           </div>
 
           {/* Detailed Breakdown Section */}
