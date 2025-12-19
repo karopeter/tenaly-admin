@@ -324,7 +324,6 @@ export default function Users() {
                                     <option value="all">All User Types</option>
                                     <option value="buyer">Buyer</option>
                                     <option value="seller">Seller</option>
-                                    <option value="customer">Customer</option>
                                 </select>
 
                                 {/* Status Dropdown */}
