@@ -1265,26 +1265,26 @@ export default function AdDetailsPage() {
       case 'agriculture':
         return (
           <>
-            {adDetails.agricultureType && (
+            {adDetails?.agricultureType && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Agriculture Type:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.agricultureType}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.agricultureType}</p>
               </div>
             )}
-            {adDetails.condition && (
+            {adDetails?.condition && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Condition:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.condition}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.condition}</p>
               </div>
             )}
-            {adDetails.unit && (
+            {adDetails?.unit && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Unit:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.unit}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.unit}</p>
               </div>
             )}
             {Array.isArray(adDetails?.bulkPrice) && adDetails.bulkPrice.length > 0 && (
-              <div className="bg-[#EDEDED] md:w-[650px] h-auto md:rounded-[12px] p-8 mt-4">
+              <div className="bg-[#EDEDED] md:w-[300px] h-auto md:rounded-[12px] p-8 mt-4">
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">
                   Bulk Prices
                 </span>
@@ -1311,40 +1311,40 @@ export default function AdDetailsPage() {
              </div>
             </div>
             )}
-             {adDetails.feedType && (
+             {adDetails?.feedType && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Feed Type:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.feedType}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.feedType}</p>
               </div>
             )}
-            {adDetails.brand && (
+            {adDetails?.brand && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Brand:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.brand}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.brand}</p>
               </div>
             )}
-            {adDetails.formulationType && (
+            {adDetails?.formulationType && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Formulation Type:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.formulationType}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.formulationType}</p>
               </div>
             )}
-            {adDetails.serviceMode && (
+            {adDetails?.serviceMode && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Service Mode:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.serviceMode}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.serviceMode}</p>
               </div>
             )}
-            {adDetails.experienceLevel && (
+            {adDetails?.experienceLevel && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Experience Level:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.experienceLevel}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.experienceLevel}</p>
               </div>
             )}
-            {adDetails.availability && (
+            {adDetails?.availability && (
               <div>
                 <span className="block text-[14px] font-[600] text-[#525252] mb-1">Availability:</span>
-                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails.availability}</p>
+                <p className="text-[#4C4C4C] text-[14px] font-[400]">{adDetails?.availability}</p>
               </div>
             )}
           </>
