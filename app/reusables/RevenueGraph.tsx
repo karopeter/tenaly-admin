@@ -1,117 +1,148 @@
-import React from 'react';
-import { 
- LineChart, 
- Line, 
- XAxis, 
- YAxis, 
- CartesianGrid,
- Tooltip,
- ResponsiveContainer, 
- Area,
- AreaChart
-} from 'recharts';
-import { TrendingUp } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import api from '@/services/api';
 
-const revenueData = [
- { month: 'Jan', revenue: 450000 },
-  { month: 'Feb', revenue: 520000 },
-  { month: 'Mar', revenue: 480000 },
-  { month: 'Apr', revenue: 350000 },
-  { month: 'May', revenue: 580000 },
-  { month: 'Jun', revenue: 700000 },
-  { month: 'Jul', revenue: 620000 },
-  { month: 'Aug', revenue: 242050 },
-  { month: 'Sep', revenue: 580000 },
-  { month: 'Oct', revenue: 520000 },
-  { month: 'Nov', revenue: 650000 },
-  { month: 'Dec', revenue: 680000 },
-];
+interface RevenueDataPoint {
+  date: string;
+  revenue: number;
+}
 
-// Custom Tooltip Component 
-const CustomTooltip = ({ active, payload }: any) => {
+interface RevenueGraphProps {
+  period?: '7days' | '30days' | '12months';
+}
+
+export default function RevenueGraph({ period = '30days' }: RevenueGraphProps) {
+  const [revenueData, setRevenueData] = useState<RevenueDataPoint[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRevenueData = async () => {
+      try {
+        setLoading(true);
+        
+        const response = await api.get(`/profile/admin/revenue-growth`, {
+          params: { period }
+        });
+        
+        if (response.data.success && response.data.data) {
+          // Format data for the chart
+          const formattedData = response.data.data.map((item: RevenueDataPoint) => ({
+            date: formatDate(item.date, period),
+            revenue: item.revenue
+          }));
+          
+          setRevenueData(formattedData);
+        }
+      } catch (err) {
+        console.error('Error fetching revenue data:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load revenue data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRevenueData();
+  }, [period]);
+
+  // Format date based on period
+  const formatDate = (dateString: string, period: string) => {
+    const date = new Date(dateString);
+    
+    if (period === '12months') {
+      return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    } else {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+  };
+
+  // Format currency for tooltip
+  const formatCurrency = (value: number) => {
+    return `₦${value.toLocaleString('en-NG')}`;
+  };
+
+  // Custom tooltip
+  const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-       <div className='bg-white px-4 py-2 rounded-lg shadow-lg border border-gray-200'>
-        <p className='text-sm font-semibold text-gray-800'>
-          ₦{payload[0].value.toLocaleString()}
-        </p>
-       </div>
+        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
+          <p className="text-sm font-semibold text-gray-700">{payload[0].payload.date}</p>
+          <p className="text-sm text-indigo-600 font-bold">
+            {formatCurrency(payload[0].value)}
+          </p>
+        </div>
       );
     }
     return null;
-};
+  };
 
-const RevenueGraph = () => {
-    const totalRevenue = 700000;
-    const percentageChange = 12;
-
+  if (loading) {
     return (
-     <div className='bg-white p-6 rounded-lg shadow-md border border-[#EDEDED]'>
-      {/* Header Section */}
-      <div className='mb-6'>
-       <div className='flex items-start justify-between'>
-         <div className='flex flex-row gap-4 items-center'>
-            <h3 className='text-[#525252] font-[600] text-[16px]'>Total Revenue:</h3>
-            <p className='text-[#000087] font-[500] text-[24px]'>
-             ₦{totalRevenue.toLocaleString()}   
-            </p>
-         </div>
-         <div className='flex items-center gap-1 text-sm text-green-600'>
-          <TrendingUp className="w-4 h-4 text-[#5555DD]" />
-          <span className='text-[14px] font-[400] text-[#394CD9]'>+{percentageChange}%</span>
-          <span className='text-[#525252] font-[400] text-[14px]'>from last 28 days</span>
-         </div>
-       </div>
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Revenue Overview</h3>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        </div>
       </div>
-
-       {/* Graph Section */}
-       <div className='w-full h-[300px] border border-[#EDEDED] rounded-lg p-4'>
-         <ResponsiveContainer width="100%" height="100%">
-           <AreaChart
-            data={revenueData}
-            margin={{ 
-             top: 10, 
-             right: 10,
-             left: 0,
-             bottom: 0
-            }}
-           >
-            <defs>
-             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-               <stop offset="5%" stopColor="#899DFF" stopOpacity={0.3}/>
-               <stop offset="95%" stopColor="#BFFFCC" stopOpacity={8}/>
-             </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#red" vertical={false} />
-            <XAxis 
-             dataKey="month"
-             axisLine={false}
-             tickLine={false}
-             tick={{ fill: '#9ca3af', fontSize: 12 }}
-             dy={10}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: '#9ca3af', fontSize: 12 }}
-              tickFormatter={(value) => `₦${(value / 1000)}k`}
-              dx={10}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Area 
-             type="monotone"
-             dataKey="revenue"
-             stroke="#6366f1"
-             strokeWidth={2}
-             fill="url(#colorRevenue)"
-             dot={{ fill: '#899DFF', r: 4, strokeWidth: 0 }}
-             activeDot={{ r: 6, fill: '#6366f1' }}
-            />
-           </AreaChart>
-         </ResponsiveContainer>
-       </div>
-     </div>
     );
-}
+  }
 
-export default RevenueGraph;
+  if (error) {
+    return (
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Revenue Overview</h3>
+        <div className="flex items-center justify-center h-64">
+          <p className="text-red-500">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (revenueData.length === 0) {
+    return (
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Revenue Overview</h3>
+        <div className="flex items-center justify-center h-64">
+          <p className="text-gray-500">No revenue data available for this period</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">Revenue Overview</h3>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={revenueData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis 
+            dataKey="date" 
+            stroke="#888888"
+            fontSize={12}
+            tickLine={false}
+          />
+          <YAxis 
+            stroke="#888888"
+            fontSize={12}
+            tickLine={false}
+            tickFormatter={(value) => `₦${(value / 1000).toFixed(0)}k`}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend 
+            wrapperStyle={{ fontSize: '14px' }}
+            iconType="line"
+          />
+          <Line 
+            type="monotone" 
+            dataKey="revenue" 
+            stroke="#4F46E5" 
+            strokeWidth={2}
+            dot={{ fill: '#4F46E5', r: 4 }}
+            activeDot={{ r: 6 }}
+            name="Revenue"
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
