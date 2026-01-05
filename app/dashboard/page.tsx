@@ -5,19 +5,28 @@ import { useEffect, useState } from "react";
 import { Sidebar } from "../reusables/Sidebar";
 import { Header } from "../reusables/Header";
 import { StatsCard } from "../reusables/StatsCard";
-import { User, Crown,  ShoppingBag, Store } from "lucide-react";
+import { User, Crown, ShoppingBag, Store, DollarSign } from "lucide-react";
 import api from "@/services/api";
 import { UserStats } from "../types/dashboard.types";
 import RevenueGraph from "../reusables/RevenueGraph";
 import { toast } from "react-toastify";
 
+interface DashboardStats {
+  totalUsers: { count: number; change: string };
+  totalAds: { count: number; change: string };
+  subscribedUsers: { count: number; change: string };
+  totalRevenue: { count: number; change: string };
+}
 
 export default function Dashboard() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [userStats, setUserStats] = useState<UserStats | null>(null);
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null);
   const [statsLoading, setStatsLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState<string>("");
+  const [selectedDays, setSelectedDays] = useState<string>("28");
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,28 +48,45 @@ export default function Dashboard() {
     }
   }, [user, isLoading, router]);
 
-  // Fetch user statistics
+  // Fetch user statistics and dashboard stats
   useEffect(() => {
-    const fetchUserStats = async () => {
+    const fetchStats = async () => {
       try {
         setStatsLoading(true);
-        const response = await api.get('/auth/admin/users-stats');
         
-        if (response.data.success) {
-          setUserStats(response.data.data);
+        // Build query params
+        const params = new URLSearchParams();
+        if (selectedYear) {
+          params.append('year', selectedYear);
+        }
+        if (selectedDays) {
+          params.append('lastDays', selectedDays);
+        }
+
+        const [userStatsResponse, dashboardStatsResponse] = await Promise.all([
+          api.get('/auth/admin/users-stats'),
+          api.get(`/profile/admin/dashboard/stats?${params.toString()}`)
+        ]);
+        
+        if (userStatsResponse.data.success) {
+          setUserStats(userStatsResponse.data.data);
+        }
+
+        if (dashboardStatsResponse.data.success) {
+          setDashboardStats(dashboardStatsResponse.data.data);
         }
       } catch (error) {
-        console.error("Error fetching user stats:", error);
-        toast.error("Failed to load user statistics");
+        console.error("Error fetching stats:", error);
+        toast.error("Failed to load statistics");
       } finally {
         setStatsLoading(false);
       }
     };
 
     if (user && user.role === 'admin') {
-      fetchUserStats();
+      fetchStats();
     }
-  }, [user]);
+  }, [user, selectedYear, selectedDays]);
 
   if (isLoading || statsLoading) {
     return (
@@ -83,18 +109,18 @@ export default function Dashboard() {
     return num.toLocaleString('en-US');
   };
 
-  // Calculate percentage change (you can customize this based on your needs)
-  const calculateChange = (current: number, previous: number) => {
-    if (previous === 0) return "+100%";
-    const change = ((current - previous) / previous) * 100;
-    return `${change > 0 ? '+' : ''}${change.toFixed(1)}%`;
+  // Format currency
+  const formatCurrency = (num: number) => {
+    return `₦${num.toLocaleString('en-NG')}`;
   };
 
   const stats = [
     {
       title: "Total Users",
-      value: formatNumber(userStats?.totalUsers || 0),
-      change: `${userStats?.recentActivity.last30Days || 0} new users in last 30 days`,
+      value: formatNumber(dashboardStats?.totalUsers.count || userStats?.totalUsers || 0),
+      change: dashboardStats?.totalUsers.change 
+        ? `${dashboardStats.totalUsers.change}% from last period`
+        : `${userStats?.recentActivity.last30Days || 0} new users in last 30 days`,
       icon: User,
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600"
@@ -116,6 +142,16 @@ export default function Dashboard() {
       iconColor: "text-purple-600"
     },
     {
+      title: "Total Revenue",
+      value: formatCurrency(dashboardStats?.totalRevenue.count || 0),
+      change: dashboardStats?.totalRevenue.change 
+        ? `${dashboardStats.totalRevenue.change}% from last period`
+        : "0% change",
+      icon: DollarSign,
+      iconBg: "bg-emerald-100",
+      iconColor: "text-emerald-600"
+    },
+     {
      title: "Total Admins",
      value: formatNumber(userStats?.roleBreakdown.admin || 0),
      change: `${Math.round(((userStats?.roleBreakdown.admin || 0) / (userStats?.totalUsers || 1)) * 100)}% of total users`,
@@ -124,29 +160,33 @@ export default function Dashboard() {
      iconColor: "text-pink-600",
     },
     {
-      title: "Verified Users",
-      value: formatNumber(userStats?.verifiedUsers || 0),
-      change: `${Math.round(((userStats?.verifiedUsers || 0) / (userStats?.totalUsers || 1)) * 100)}% verified`,
+      title: "Subscribed Users",
+      value: formatNumber(dashboardStats?.subscribedUsers.count || 0),
+      change: dashboardStats?.subscribedUsers.change 
+        ? `${dashboardStats.subscribedUsers.change}% from last period`
+        : "No change",
       icon: Crown,
       iconBg: "bg-yellow-100",
       iconColor: "text-yellow-600"
     },
     {
-      title: "Google Sign-ups",
-      value: formatNumber(userStats?.providerBreakdown.google || 0),
-      change: `${Math.round(((userStats?.providerBreakdown.google || 0) / (userStats?.totalUsers || 1)) * 100)}% use Google`,
-      icon: User,
-      iconBg: "bg-red-100",
-      iconColor: "text-red-600"
+      title: "Total Ads",
+      value: formatNumber(dashboardStats?.totalAds.count || 0),
+      change: dashboardStats?.totalAds.change 
+        ? `${dashboardStats.totalAds.change}% from last period`
+        : "No change",
+      icon: ShoppingBag,
+      iconBg: "bg-pink-100",
+      iconColor: "text-pink-600"
     },
-    // {
-    //   title: "Complete Profiles",
-    //   value: formatNumber(userStats?.completeProfiles || 0),
-    //   change: `${Math.round(((userStats?.completeProfiles || 0) / (userStats?.totalUsers || 1)) * 100)}% completed`,
-    //   icon: Clipboard,
-    //   iconBg: "bg-indigo-100",
-    //   iconColor: "text-indigo-600"
-    // },
+    {
+      title: "Verified Users",
+      value: formatNumber(userStats?.verifiedUsers || 0),
+      change: `${Math.round(((userStats?.verifiedUsers || 0) / (userStats?.totalUsers || 1)) * 100)}% verified`,
+      icon: Crown,
+      iconBg: "bg-indigo-100",
+      iconColor: "text-indigo-600"
+    },
     {
       title: "Active This Week",
       value: formatNumber(userStats?.recentActivity.last7Days || 0),
@@ -154,14 +194,6 @@ export default function Dashboard() {
       icon: User,
       iconBg: "bg-teal-100",
       iconColor: "text-teal-600"
-    },
-    {
-      title: "Active Today",
-      value: formatNumber(userStats?.recentActivity.today || 0),
-      change: "New registrations today",
-      icon: User,
-      iconBg: "bg-orange-100",
-      iconColor: "text-orange-600"
     }
   ];
 
@@ -179,16 +211,27 @@ export default function Dashboard() {
 
             {/* Year Filter Dropdown */}
             <select 
+              value={selectedYear}
+              onChange={(e) => {
+                setSelectedYear(e.target.value);
+                setSelectedDays(""); // Clear days filter when year is selected
+              }}
               className="px-4 py-2 border-[1px] border-[#EDEDED] 
-              rounded-[4px] text-sm md:w-[71px] focus:outline-none"
+              rounded-[4px] text-sm md:w-[120px] focus:outline-none"
             >
-              <option value="">Filter by Year</option>
+              <option value="">All Years</option>
+              <option value="2024">2024</option>
               <option value="2025">2025</option>
               <option value="2026">2026</option>
             </select>
 
             {/* Last Days Filter Dropdown */}
             <select 
+              value={selectedDays}
+              onChange={(e) => {
+                setSelectedDays(e.target.value);
+                setSelectedYear(""); // Clear year filter when days is selected
+              }}
               className="px-4 py-2 border-[1px] border-[#EDEDED]  
               rounded-[4px] text-sm md:w-[123px] focus:outline-none"
             >
@@ -207,8 +250,9 @@ export default function Dashboard() {
             ))}
           </div>
 
+          {/* Revenue Graph */}
           <div className="mt-8">
-            <RevenueGraph />
+            <RevenueGraph period={selectedDays === "7" ? "7days" : selectedDays === "90" ? "12months" : "30days"} />
           </div>
 
           {/* Detailed Breakdown Section */}

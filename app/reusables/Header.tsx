@@ -18,7 +18,7 @@ export const Header = ({ isOpen, setIsOpen }: HeaderProps) => {
          <button 
           onClick={() => setIsOpen(!isOpen)}  
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          aria-span="Toggle sidebar">
+          aria-label="Toggle sidebar">
           <Menu className="w-6 h-6 text-gray-700" />
          </button>
        </div>
