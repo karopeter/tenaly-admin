@@ -19,7 +19,7 @@ export const NAV_ITEMS: NavItem[] = [
   { name: "User Verification", icon: FileText, path: "/verification" },
   { name: "Transactions", icon: Wallet, path: "/transactions" },
   { name: "Subscription", icon: Crown, path: "/subscription" },
-  { name: "Team Management", icon: UserPlus, path: "/team-management" },
+  // { name: "Team Management", icon: UserPlus, path: "/team-management" },
   { name: "Customer Support", icon: Headphones, path: "/support" }, 
   { name: "Report", icon: FileBarChart, path: "/report"},
 ]
