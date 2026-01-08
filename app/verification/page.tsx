@@ -483,16 +483,16 @@ export default function Verification() {
 
        {/* Details Modal */}
        {showDetailsModal && selectedVerification && selectedUser && 
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/40 backgrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-[20px] font-[500] text-[#525252]">
                   Verification  Details 
                 </h2>
                 <button 
                   onClick={() => setShowDetailsModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-[#141B34] cursor-pointer"
                 >
                   <FiX size={24} />
                 </button>
@@ -500,15 +500,15 @@ export default function Verification() {
 
               {/* User Info */}
               <div className="mb-6 pb-6 border-b">
-                <h3 className="text-sm font-semibold text-gray-700 mb-3">User Information</h3>
+                <h3 className="text-[14px] font-semibold text-[#525252] mb-3">User Information</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                     <p className="text-#525252] text-[14px] font-[600]">Name</p>
-                     <p className="text-[#525252] font-medium">{selectedUser.fullName}</p>
+                     <p className="text-[#525252] text-[14px] font-[600]">User Name:</p>
+                     <p className="text-[#5555DD] font-[400] text-[14px]">{selectedUser.fullName}</p>
                   </div>
                   <div>
-                    <p className="text-[#525252]">Email</p>
-                    <p className="text-[#525252] font-[400]">{selectedUser.email}</p>
+                    <p className="text-[#525252] text-[14px] font-[600]">Email</p>
+                    <p className="text-[#525252] font-[400] text-[14px]">{selectedUser.email}</p>
                   </div>
                 </div>
               </div>
@@ -516,11 +516,11 @@ export default function Verification() {
               {/* Verification Details */}
               {selectedVerification.verificationType === "personal" ? (
                 <div className="mb-6 pb-6 border-b">
-                  <h3 className="text-[#525252] font-[600] text-[16px] mb-3">Personal Verification</h3>
+                  <h3 className="text-[#525252] font-[600] text-[14px] mb-3">Personal Verification</h3>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-[14px] text-[#525252]">ID Type</p>
-                      <p className="text-sm font-medium capitalize text-[#525252]">
+                      <p className="text-[14px] font-[600] text-[#525252]">ID Type</p>
+                      <p className="text-[14px] font-[400] capitalize text-[#4C4C4C]">
                         {selectedVerification.validIdType}
                       </p>
                     </div>
@@ -539,23 +539,23 @@ export default function Verification() {
                 </div>
               ): (
                <div className="mb-6 pb-6 border-b">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Business Verification</h3>
+                  <h3 className="text-[#525252] font-[600] text-[14px] mb-3">Business Verification</h3>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-xs text-gray-500">Business Name</p>
-                      <p className="text-sm font-medium">{selectedVerification.businessName}</p>
+                      <p className="text-[14px] font-[600] text-[#525252]">Business Name</p>
+                      <p className="text-[#5555DD] font-[400] text-[14px]">{selectedVerification.businessName}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Business Address</p>
-                      <p className="text-sm font-medium">{selectedVerification.businessAddress}</p>
+                      <p className="text-[14px] font-[600] text-[#525252]">Business Address</p>
+                      <p className="text-[#4C4C4C] font-[400] text-[14px]">{selectedVerification.businessAddress}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Business Email</p>
-                      <p className="text-sm font-medium">{selectedVerification.businessEmail}</p>
+                      <p className="text-[14px] font-[600] text-[#525252]">Business Email</p>
+                      <p className="text-[#4C4C4C] font-[400] text-[14px]">{selectedVerification.businessEmail}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Business Phone</p>
-                      <p className="text-sm font-medium">{selectedVerification.businessPhoneNumber}</p>
+                      <p className="text-[#525252] text-[14px] font-[600]">Business Phone</p>
+                      <p className="text-[#4C4C4C] font-[400] text-[14px]">{selectedVerification.businessPhoneNumber}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 mb-2">Business Certificate</p>
@@ -577,19 +577,19 @@ export default function Verification() {
                 <h3 className="text-sm font-semibold text-gray-700 mb-3">Status Information</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                     <p className="text-xs text-gray-500">Date Submitted</p>
-                     <p className="text-sm font-medium">
+                     <p className="text-[#525252] text-[14px] font-semibold">Date Submitted</p>
+                     <p className="text-[#4C4C4C] text-[14px] font-[400]">
                       {formatDate(selectedVerification.dateSubmitted)}
                      </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Status</p>
+                    <p className="text-[#525252] font-semibold text-[14px]">Status</p>
                     <div className="mt-1">{getStatusBadge(selectedVerification.status)}</div>
                   </div>
                   {selectedVerification.dateApproved && (
                     <div>
-                      <p className="text-xs text-gray-500">Verified Date</p>
-                      <p className="text-sm font-medium">
+                      <p className="text-[#525252] font-[600] text-[14px]">Verified Date</p>
+                      <p className="text-[#4C4C4C] text-[14px] font-[400]">
                         {formatDate(selectedVerification.dateApproved)}
                       </p>
                     </div>

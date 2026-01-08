@@ -95,9 +95,9 @@ export default function ViewUserProfile() {
 
     const getStatusBadge = (status: string) => {
         const styles = {
-         approved: 'bg-green-100 text-green-800',
-         pending: 'bg-yellow-100 text-yellow-800',
-         rejected: 'bg-red-100 text-red-800'
+         approved: 'bg-[#238E15] text-[#FAFAFA]',
+         pending: 'bg-[#CAA416] text-[#FAFAFA]',
+         rejected: 'bg-[#CB0D0D] text-[#FAFAFA]'
         };
         return styles[status as keyof typeof styles] || 'bg-gray-100 text-gray-800';
     };
@@ -403,27 +403,38 @@ export default function ViewUserProfile() {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {profileData.recentAds.map((ad) => (
                       <tr key={ad._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-[14px] text-[#525252]">
+                        <td className="px-6 py-4 whitespace-nowrap text-[14px] font-[400] text-[#525252]">
                             {ad.adCategory || ad.category || 'N/A'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-[14px] text-[#525252]">
+                        <td className="px-6 py-4 whitespace-nowrap text-[14px] font-[400] text-[#525252]">
                           {formatDate(ad.createdAt)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-[14px] text-[#525252]">
+                        <td className="px-6 py-4 whitespace-nowrap text-[14px] font-[400] text-[#525252]">
                          {ad.approvedAt ? formatDate(ad.approvedAt) : '-'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-3 py-1 inline-flex text-[12px] leading-5 font-semibold rounded-full capitalize ${getStatusBadge(ad.status || 'pending')}`}>
+                          <span className={`px-3 py-1 inline-flex text-[12px] leading-5 font-semibold rounded-[28px] capitalize ${getStatusBadge(ad.status || 'pending')}`}>
                              {ad.status || 'pending'}
                          </span>
                          </td>
                          <td className="px-6 py-4 whitespace-nowrap text-[14px]">
-                            <button 
-                              onClick={() => router.push(`/admin/ads/${ad._id}`)}
-                              className="text-[#00A8DF] hover:text-[#1031AA] font-medium"
-                             >
-                            View Ad
-                        </button>
+                           <button
+                             onClick={() => router.push(`/admin/ads/${ad._id}`)}
+                             className={`font-medium ${
+                              ad.status === 'approved'
+                              ? 'text-[#5555DD] hover:text-[#4444CC]'
+                              : ad.status === 'rejected' 
+                              ? 'text-[#CB0D0D] hover:text-[#A00A0A]'
+                              : 'text-[#9E8011] hover:text-[#8B7010]'
+                             }`}
+                           >
+                             {ad.status === 'approved' 
+                               ? 'View Details'
+                               : ad.status === 'rejected'
+                               ? 'View Rejected Ad' 
+                               : 'Review Ads'
+                              }
+                           </button>
                         </td>
                       </tr>
                     ))}
@@ -450,8 +461,8 @@ export default function ViewUserProfile() {
                       <span
                        className={`px-3 py-1 text-[12px] font-semibold rounded-full capitalize ${
                         profileData.verificationStatus.personal === 'verified' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-yellow-100 text-yellow-800'
+                          ? 'bg-[#238E15] text-[#FAFAFA]' 
+                          : 'bg-[#CAA416] text-[#FAFAFA]'
                         }`}>
                          {profileData.verificationStatus.personal}
                       </span>
@@ -466,8 +477,8 @@ export default function ViewUserProfile() {
                       <span
                         className={`px-3 py-1 text-[12px] font-semibold rounded-full capitalize ${
                        profileData.verificationStatus.business === 'verified' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-yellow-100 text-yellow-800'
+                          ? 'bg-[#238E15] text-[#FAFAFA]' 
+                          : 'bg-[#CAA416] text-[#FAFAFA]'
                        }`}>
                         {profileData.verificationStatus.business}
                       </span>
