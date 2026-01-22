@@ -1,5 +1,7 @@
 export interface UserStats {
   totalUsers: number;
+  totalAds: number;
+  subscribedUsers: number;
   roleBreakdown: {
     buyer: number;
     seller: number;

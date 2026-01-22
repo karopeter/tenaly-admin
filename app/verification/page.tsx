@@ -283,7 +283,7 @@ export default function Verification() {
               </div>
 
               {/* Filter Centered */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full lg:w-auto lg:mx-auto">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full lg:w-auto lg:mx-auto overflow-x-auto">
                   <span className="text-[#2C2C2C] font-[400] text-[14px]">
                      Filter By:
                   </span>
@@ -295,7 +295,7 @@ export default function Verification() {
                     className="px-4 py-2 
                     border border-[#CDCDD7]
                     rounded-[4px]
-                    w-full sm:w-[96px]
+                    w-full sm:w-[120px]
                     h-[44px]
                     focus:outline-none"
                   >
@@ -309,7 +309,7 @@ export default function Verification() {
                      type="date"
                      value={filterDate}
                      onChange={(e) => setFilterDate(e.target.value)}
-                     className="px-4 py-2 border border-[#CDCDD7] rounded-lg w-full sm:w-[173px] h-[44px] focus:outline-none"
+                     className="px-3 py-2 border border-[#CDCDD7] rounded-lg w-full sm:w-[150px] h-[44px] focus:outline-none text-sm"
                    />
 
                   {/* Status Dropdown */}
