@@ -161,20 +161,16 @@ export default function Dashboard() {
     },
     {
       title: "Subscribed Users",
-      value: formatNumber(dashboardStats?.subscribedUsers.count || 0),
-      change: dashboardStats?.subscribedUsers.change 
-        ? `${dashboardStats.subscribedUsers.change}% from last period`
-        : "No change",
+      value: formatNumber(userStats?.subscribedUsers || 0),
+      change: `${Math.round(((userStats?.subscribedUsers || 0) / (userStats?.totalUsers || 1)) * 100)}% of total users`,
       icon: Crown,
       iconBg: "bg-yellow-100",
       iconColor: "text-yellow-600"
     },
     {
       title: "Total Ads",
-      value: formatNumber(dashboardStats?.totalAds.count || 0),
-      change: dashboardStats?.totalAds.change 
-        ? `${dashboardStats.totalAds.change}% from last period`
-        : "No change",
+      value: formatNumber(userStats?.totalAds || 0),
+      change: `${userStats?.totalAds || 0} total ads`,
       icon: ShoppingBag,
       iconBg: "bg-pink-100",
       iconColor: "text-pink-600"
