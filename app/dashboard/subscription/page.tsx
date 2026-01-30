@@ -1,9 +1,9 @@
 "use client";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Sidebar } from "../reusables/Sidebar";
-import { Header } from "../reusables/Header";
+import { Sidebar } from "@/app/reusables/Sidebar";
+import { Header } from "@/app/reusables/Header";
 
 
 export default function Subscription() {

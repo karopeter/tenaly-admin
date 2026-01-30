@@ -1,12 +1,12 @@
 "use client";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Sidebar } from "../reusables/Sidebar";
-import { Header } from "../reusables/Header";
+import { Sidebar } from "@/app/reusables/Sidebar";
+import { Header } from "@/app/reusables/Header";
 
 
-export default function CustomerSupport() {
+export default function Report() {
     const { user, isLoading } = useAuth();
     const router = useRouter();
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -59,7 +59,7 @@ export default function CustomerSupport() {
          <Header isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
          <main className="p-6">
-           <h1 className="text-[#525252]">Customer Support</h1>
+           <h1 className="text-[#525252]">Report</h1>
          </main>
        </div>
      </div>

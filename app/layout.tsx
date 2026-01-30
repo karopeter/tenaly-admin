@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ReactQueryProvider } from "@/Providers/Provider";
 import {Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
@@ -26,7 +27,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AuthProvider>
-          {children}
+          <ReactQueryProvider>
+            {children}
           <ToastContainer
             position="top-right"
             autoClose={3000}
@@ -39,6 +41,7 @@ export default function RootLayout({
             pauseOnHover
             theme="light"
           />
+          </ReactQueryProvider>
         </AuthProvider>
       </body>
     </html>

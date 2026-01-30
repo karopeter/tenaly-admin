@@ -1,14 +1,14 @@
 "use client";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Sidebar } from "../reusables/Sidebar";
+import { Sidebar } from "@/app/reusables/Sidebar";
 import { FiDownload, FiMoreVertical, FiEye, FiUserX, FiTrash2 } from "react-icons/fi";
-import Img from "../reusables/Img";
+import Img from "@/app/reusables/Img";
 import api from "@/services/api";
-import { UserData, UserFilters, Pagination } from "../types/users-types";
+import { UserData, UserFilters, Pagination } from "@/app/types/users-types";
+import { Header } from "@/app/reusables/Header";
 import { toast } from 'react-toastify';
-import { Header } from "../reusables/Header";
 
 
 interface ModalState {
