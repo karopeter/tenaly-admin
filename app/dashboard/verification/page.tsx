@@ -1,13 +1,13 @@
 "use client";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Img from "../reusables/Img";
-import { Sidebar } from "../reusables/Sidebar";
+import Img from "@/app/reusables/Img";
+import { Sidebar } from "@/app/reusables/Sidebar";
 import api from "@/services/api";
 import { FiDownload, FiX } from "react-icons/fi";
-import { VerificationData, UserVerification } from "../types/verification.types";
-import { Header } from "../reusables/Header";
+import { VerificationData, UserVerification } from "@/app/types/verification.types";
+import { Header } from "@/app/reusables/Header";
 import { toast } from 'react-toastify';
 
 

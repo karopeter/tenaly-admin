@@ -1,14 +1,14 @@
 "use client";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 import { useEffect, useState } from "react";
-import { Sidebar } from "../reusables/Sidebar";
-import { Header } from "../reusables/Header";
+import { Sidebar } from "@/app/reusables/Sidebar";
+import { Header } from "@/app/reusables/Header";
 import api from "@/services/api";
-import { Ad } from "../types/ads";
+import { Ad } from "@/app/types/ads";
 import { useRouter } from "next/navigation";
 import { FiMoreVertical, FiDownload } from "react-icons/fi";
 import { format, } from "date-fns";
-import Img from "../reusables/Img";
+import Img from "@/app/reusables/Img";
 
 type StatusFilter = 'all' | 'approved' | 'pending' | 'rejected' | 'sold'; 
 type CategoryFilter = string;
@@ -29,7 +29,6 @@ export default function AdsVerification() {
     const [searchTerm, setSearchTerm] = useState('');
     const [dateFilter, setDateFilter] = useState<string>('all');
     const [flattenedAds, setFlattenedAds] = useState<FlattenedAd[]>([]);
-    const [selectedAd, setSelectedAd] = useState<FlattenedAd | null>(null);
     const [showActionMenu, setShowActionMenu] = useState<string | null>(null);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [actionLoading, setActionLoading] = useState(false);
@@ -127,35 +126,7 @@ export default function AdsVerification() {
 
      return status.charAt(0).toUpperCase() + status.slice(1);
    }
-
-    const handleApprove = async (adId: string) => {
-      try {
-        setActionLoading(true);
-        await api.patch(`/profile/admin/approve-ad/${adId}`);
-        fetchUsers();
-        setShowActionMenu(null);
-        setShowDetailsModal(false);
-      } catch (error) {
-        console.error('Error approving ad:', error);
-      } finally {
-        setActionLoading(false);
-      }
-    };
-
-    const handleReject = async (adId: string) => {
-      try {
-        setActionLoading(true);
-        await api.patch(`/profile/admin/reject-ad/${adId}`);
-        fetchUsers();
-        setShowActionMenu(null);
-        setShowDetailsModal(false);
-      } catch (error) {
-        console.error('Error rejecting ad:', error);
-      } finally {
-        setActionLoading(false);
-      }
-    };
-
+   
     const exportToCSV = async () => {
      try {
     // Build query params based on current filters
