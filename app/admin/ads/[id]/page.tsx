@@ -234,6 +234,7 @@ export default function AdDetailsPage() {
     if (params.id) {
       fetchAdDetails();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
   const fetchAdDetails = async () => {
@@ -256,7 +257,7 @@ export default function AdDetailsPage() {
       await api.patch(`/profile/admin/approve-ad/${adDetails._id}`);
       
       toast.success('Ad approved successfully!');
-      router.push('/ads-verification');
+      router.push('/dashboard/ads-verification');
     } catch (error) {
       console.error('Error approving ad:', error);
       alert('Failed to approve ad');
@@ -287,7 +288,7 @@ export default function AdDetailsPage() {
       setRejectionReason("");
       
       toast.success('Ad rejected successfully!');
-      router.push('/ads-verification');
+      router.push('/dashboard/ads-verification');
     } catch (error) {
       console.error('Error rejecting ad:', error);
       toast.error('Failed to reject ad');
@@ -312,6 +313,7 @@ export default function AdDetailsPage() {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adDetails?.images.length]);
 
 
