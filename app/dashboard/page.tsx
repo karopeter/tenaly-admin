@@ -101,7 +101,9 @@ export default function Dashboard() {
   }
 
   // Calculate total buyers (including 'customer' as legacy buyer role)
-  const totalBuyers = (userStats?.roleBreakdown.buyer || 0) + (userStats?.roleBreakdown.customer || 0);
+ // const totalBuyers = (userStats?.roleBreakdown.buyer || 0) + (userStats?.roleBreakdown.customer || 0);
+  //const totalSellers = userStats?.roleBreakdown.seller || 0;
+  const totalBuyers = userStats?.roleBreakdown.buyer || 0;
   const totalSellers = userStats?.roleBreakdown.seller || 0;
 
   // Format numbers with commas
@@ -117,7 +119,7 @@ export default function Dashboard() {
   const stats = [
     {
       title: "Total Users",
-      value: formatNumber(dashboardStats?.totalUsers.count || userStats?.totalUsers || 0),
+      value: formatNumber(userStats?.totalUsers || 0),
       change: dashboardStats?.totalUsers.change 
         ? `${dashboardStats.totalUsers.change}% from last period`
         : `${userStats?.recentActivity.last30Days || 0} new users in last 30 days`,
