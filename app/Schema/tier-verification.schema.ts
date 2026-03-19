@@ -14,7 +14,7 @@ export const TierStatusSchema = z.enum(["pending", "approved", "rejected"]);
 // Base Tier Verification Schema 
 const BaseTierVerificationSchema = z.object({
   _id: z.string(),
-  userId: UserSchema,
+  userId: UserSchema.nullable(),
   tier: z.number().int().min(1).max(3),
   status: TierStatusSchema,
   createdAt: z.string(),
