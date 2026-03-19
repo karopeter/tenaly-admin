@@ -120,8 +120,8 @@ export default function TierVerification() {
          ];
 
          const csvRows = filteredVerifications.map((v) => [
-            v.userId.fullName,
-            v.userId.email,
+            v.userId?.fullName || "Deleted User",
+            v.userId?.email || "N/A",
             v.tier,
             formatDate(v.createdAt),
             v.approvedAt ? formatDate(v.approvedAt) : "--",
@@ -383,7 +383,7 @@ export default function TierVerification() {
                           filteredVerifications.map((verification) => (
                            <tr key={verification._id} className="hover:bg-gray-50">
                             <td className="px-6 py-4 whitespace-nowrap font-[400] text-[14px] text-[#525252]">
-                              {verification.userId.fullName}
+                              {verification.userId?.fullName || <span className="text-gray-400 italic text-[13px]">Deleted User</span>}
                             </td>
                              <td className="px-6 py-4 whitespace-nowrap font-[400] text-[14px] text-[#525252]">
                               Tier {verification.tier}
