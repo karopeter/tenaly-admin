@@ -241,7 +241,7 @@ export const TierVerificationDetailsModal = () => {
          <div className="mb-6">
            <label className="text-sm text-gray-600">User:</label>
            <p className="font-medium text-blue-600">
-              {selectedVerification.userId.fullName}
+              {selectedVerification.userId?.fullName || <span className="text-gray-400 italic">Deleted user</span>}
             </p>
          </div>
 
