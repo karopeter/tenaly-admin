@@ -98,8 +98,8 @@ export const filterVerifications = (
     // Search filter 
     if (filters.search) {
         const searchLower = filters.search.toLowerCase();
-        const userName = verification.userId.fullName.toLowerCase();
-        const userEmail = verification.userId.email.toLowerCase();
+        const userName = verification.userId?.fullName?.toLowerCase() || "";
+        const userEmail = verification.userId?.email?.toLowerCase() || "";
         const tierLevel = verification.tier.toString();
 
         return (
